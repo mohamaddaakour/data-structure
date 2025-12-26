@@ -39,6 +39,62 @@ int lengthLinkedList(struct Node *head) {
     return count;
 }
 
+void insertAtEnd(struct Node *head, int data) {
+    struct Node *newNode = createNode(data);
+    if (!newNode) {
+        return;
+    }
+
+    struct Node *current = head;
+
+    // stop at the last node
+    while (current -> next != NULL) {
+        current = current -> next;
+    }
+
+    current -> next = newNode;
+}
+
+void insertAtPosition(struct Node *head, int value, int pos) {
+    struct Node *newNode = createNode(value);
+
+    struct Node *current = head;
+    int i = 1;
+
+    while (current != NULL && i < pos - 1) {
+        current = current -> next;
+        i++;
+    }
+
+    newNode -> next = current -> next;
+    current -> next = newNode;
+
+}
+
+void deleteFirst(struct Node **head) {
+    // check if the list is empty
+    if (*head == NULL) {
+        return;
+    }
+
+    struct Node *current = *head;
+
+    // to dereference head we put it in ()
+    *head = (*head) -> next;
+
+    free(current);
+}
+
+void freeList(struct Node *head) {
+    struct Node *temp;
+
+    while (head) {
+        temp = head;
+        head = head -> next;
+        free(temp);
+    }
+}
+
 int main() {
     // the head pointer that will hold the whole linked list
     struct Node *head = NULL;
@@ -63,9 +119,23 @@ int main() {
     int count = lengthLinkedList(head);
     printf("The length of this linked list is: %d\n", count);
 
-    free(Node1);
-    free(Node2);
-    free(Node3);
+    insertAtEnd(head, 4);
+
+    printLinkedList(head);
+
+    printf("\n");
+    
+    insertAtPosition(head, 8, 2);
+
+    printLinkedList(head);
+
+    printf("\n");
+
+    deleteFirst(&head);
+
+    printLinkedList(head);
+
+    freeList(head);
 
     return 0;
 }

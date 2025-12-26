@@ -39,6 +39,32 @@ int lengthLinkedList(struct Node *head) {
     return count;
 }
 
+void insertAtEnd(struct Node *head, int data) {
+    struct Node *newNode = createNode(data);
+    if (!newNode) {
+        return;
+    }
+
+    struct Node *current = head;
+
+    // stop at the last node
+    while (current -> next != NULL) {
+        current = current -> next;
+    }
+
+    current -> next = newNode;
+}
+
+void freeList(struct Node *head) {
+    struct Node *temp;
+
+    while (head) {
+        temp = head;
+        head = head -> next;
+        free(temp);
+    }
+}
+
 int main() {
     // the head pointer that will hold the whole linked list
     struct Node *head = NULL;
@@ -63,9 +89,11 @@ int main() {
     int count = lengthLinkedList(head);
     printf("The length of this linked list is: %d\n", count);
 
-    free(Node1);
-    free(Node2);
-    free(Node3);
+    insertAtEnd(head, 4);
+
+    printLinkedList(head);
+
+    freeList(head);
 
     return 0;
 }
