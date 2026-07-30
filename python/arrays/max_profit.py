@@ -4,22 +4,22 @@
 
 class Solution:
     def maxProfit(self, prices: list[int]) -> int:
-        # The lowest price we've seen so far
-        min_price = float("inf")
-
-        # Best profit found so far
+        min_price = prices[0]
         max_profit = 0
 
         for price in prices:
-            # If we found a cheaper buying price, update it
-            if price < min_price:
-                min_price = price
+            # Update the minimum buying price
+            min_price = min(min_price, price)
 
             # Profit if we sell today
             profit = price - min_price
 
             # Keep the best profit
-            if profit > max_profit:
-                max_profit = profit
+            max_profit = max(max_profit, profit)
 
         return max_profit
+
+solution = Solution()
+
+print(solution.maxProfit([7,1,5,3,6,4]))
+print(solution.maxProfit([7,6,4,3,1]))
