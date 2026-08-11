@@ -1,37 +1,40 @@
-package arrays;
-
 import java.util.HashMap;
 import java.util.Map;
 
-public class ValidAnagram {
+public class validAnagram {
 
-    public static boolean isAnagram(String s, String t) {
-
-        if (s.length() != t.length()) {
+    public static boolean validAnagram(String str1, String str2) {
+        if (str1.length() != str2.length()) {
             return false;
         }
 
-        Map<Character, Integer> sMap = new HashMap<>();
-        Map<Character, Integer> tMap = new HashMap<>();
+        Map<Character, Integer> occurences1 = new HashMap<>();
+        Map<Character, Integer> occurences2 = new HashMap<>();
 
-        for (int i = 0; i < s.length(); i++) {
-
-            char sChar = s.charAt(i);
-            char tChar = t.charAt(i);
-
-            if (sMap.containsKey(sChar)) {
-                sMap.put(sChar, sMap.get(sChar) + 1);
+        for (char c: str1.toCharArray()) {
+            if (occurences1.containsKey(c)) {
+                occurences1.put(c, occurences1.get(c) + 1);
             } else {
-                sMap.put(sChar, 1);
-            }
-
-            if (tMap.containsKey(tChar)) {
-                tMap.put(tChar, tMap.get(tChar) + 1);
-            } else {
-                tMap.put(tChar, 1);
+                occurences1.put(c, 1);
             }
         }
 
-        return sMap.equals(tMap);
+        for (char c: str2.toCharArray()) {
+            if (occurences2.containsKey(c)) {
+                occurences2.put(c, occurences2.get(c) + 1);
+            } else {
+                occurences2.put(c, 1);
+            }
+        }
+
+        System.out.println(occurences1);
+        System.out.println(occurences2);
+
+        return occurences1.equals(occurences2);
+    }
+
+    public static void main(String[] args) throws Exception {
+        System.out.println(validAnagram.validAnagram("anagram", "nagaram"));
+        System.out.println(validAnagram.validAnagram("rat", "car"));
     }
 }
